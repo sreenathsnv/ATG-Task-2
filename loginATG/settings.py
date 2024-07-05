@@ -31,6 +31,11 @@ AUTH_USER_MODEL = 'userauth.CustomUserModel'
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
+# DEBUG = True
+# SECRET_KEY = 'hjdyfgukystdyusfjyt4r326527w61573527543w56436%^$%$^%$^%$^54efytsrdytu dhggsrfdytwfguyd'
+# ALLOWED_HOSTS = []
+
+
 # Application definition
 
 INSTALLED_APPS = [

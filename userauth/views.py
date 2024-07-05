@@ -5,11 +5,6 @@ from .models import CustomUserModel
 # Create your views here.
 
 
-from .forms import UserForm
-
-
-
-
 def test(request):
     return render(request,'test.html')
 
@@ -37,7 +32,7 @@ def register(request):
         profile_picture = request.FILES.get('profile_picture')
         ac_type = request.POST.get('type')
 
-        is_doctor = True if ac_type else False
+        is_doctor = True if ac_type=='doctor' else False
         is_patient = not is_doctor
         
         if password != re_password:

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            padding: 10px 0;
+        }
+        .navbar a {
+            float: right;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .profile-info {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .profile-info img {
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            float: left;
+            margin-right: 20px;
+        }
+        .profile-info h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        .profile-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .profile-info p span {
+            font-weight: bold;
+            color: #333;
+        }
+        .profile-info .location {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .profile-info .location p {
+            margin-right: 10px;
+        }
+        .hospital-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        .hospital-card {
+            background-color: #fff;
+            width: 200px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .hospital-card:hover {
+            transform: translateY(-10px);
+        }
+        .hospital-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .hospital-card p {
+            color: #666;
+        }
+        .landing-section {
+            color: rgb(86, 0, 0);
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(222, 221, 221, 0.589);
+        }
+        .landing-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .landing-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .landing-section a {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .landing-section a:hover {
+            background: #218838;
+        }
+        .care-section {
+            background-color: #f8f9fa;
+            padding: 50px 20px;
+            text-align: center;
+            color: #333;
+        }
+        .care-section h2 {
+            color: blueviolet;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .care-section p {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .care-section .care-images {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .care-section .care-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+        }
+        .care-section .care-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+       {% if request.user.is_authenticated %}
+       <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <a href="{% url 'register' %}">Sign Up</a>
+        <a href="{% url 'login' %}">Sign In</a>
+       {% endif %}
+        <a href="{% url 'home' %}">Home</a>
+    </div>
+    {% if request.user.is_authenticated %}
+    <div class="container">
+        <h1>Dashboard</h1>
+        <div class="profile-info">
+            <img src="{{ request.user.profile_picture.url }}" alt="Profile Picture">
+            <div class="details">
+                <h2> {{request.user.first_name}} <span>{{request.user.last_name}}</span> </h2>
+                <p><span>Email:</span> {{request.user.email}}</p>
+                <p><span>First Name:</span>{{request.user.first_name}}</p>
+                <p><span>Last Name:</span> {{request.user.last_name}}</p>
+
+                {%if request.user.is_doctor%}
+                    <p><span>Account type : </span>Doctor</p>
+                {% else %}
+                    <p><span>Account type : </span>Patient</p>
+                {% endif %}
+
+                <div class="location">
+                    <p><span>City:</span> {{request.user.city}}</p>
+                    <p><span>State:</span> {{request.user.state}}</p>
+                    <p><span>Zipcode:</span>{{ request.user.zipcode }}</p>
+                </div>
+            </div>
+        </div>
+        
+     {% endif %}
+    <!-- Landing Section -->
+    <div class="landing-section">
+        <h2>Welcome to Our Hospital</h2>
+        <p>We provide the best healthcare services with state-of-the-art facilities and experienced doctors.</p>
+        <a href="/services">Explore Our Services</a>
+    </div>
+    <!-- Care Section -->
+    <div class="care-section">
+        <h2>Our Commitment to Care</h2>
+        <p>At our hospital, we prioritize patient care and strive to provide the highest quality of service. Our dedicated team of professionals is here to support you every step of the way.</p>
+        <div class="care-images">
+            <div class="care-image">
+                <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Healthcare Image 1">
+            </div>
+            <div class="care-image">
+                <img src="https://images.unsplash.com/photo-1576765608622-067973a79f53?q=80&w=1778&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Healthcare Image 2">
+            </div>
+            <div class="care-image">
+                <img src="https://images.unsplash.com/photo-1576765975429-d2d8cf8c0ba0?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Healthcare Image 3">
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="hospital-info">
+        <div class="hospital-card">
+            <h3>Number of Doctors</h3>
+            <p>120</p>
+        </div>
+        <div class="hospital-card">
+            <h3>Number of Patients</h3>
+            <p>1,500</p>
+        </div>
+        <div class="hospital-card">
+            <h3>Number of Beds</h3>
+            <p>300</p>
+        </div>
+        <div class="hospital-card">
+            <h3>Emergency Cases</h3>
+            <p>50</p>
+        </div>
+        <div class="hospital-card">
+            <h3>Departments</h3>
+            <p>10</p>
+        </div>
+        <div class="hospital-card">
+            <h3>Surgeries Performed</h3>
+            <p>200</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

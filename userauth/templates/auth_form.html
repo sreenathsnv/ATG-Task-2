@@ -1,0 +1,81 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slide Navbar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/auth.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+        {% for message in messages %}
+        <div class="alert alert-danger">
+            <strong>Error!</strong> {{message}}
+          </div>
+        {% endfor %}
+{% if page == 'register' %}			
+            <div class="signup">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                  <label for="first_name">First name</label>
+                    <input type="text" name="first_name" id="">
+                <label for="last_name">Last name</label>
+                    <input type="text" name="last_name" id="">
+                <label for="email">Email</label>
+                    <input type="email" name="email" id="">
+                <label for="password">password</label>
+                    <input type="password" name="password" id="">
+                <label for="re_password">Confirm password</label>
+                    <input type="password" name="re_password" id="">
+                <label for="city">City</label>
+                    <input type="text" name="city" id="">
+                <label for="state">State</label>
+                    <input type="text" name="state" id="">                    
+                <label for="zipcode">Zipcode</label>
+                    <input type="text" name="zipcode" id="">
+                <label for="profile_picture">Upload your picture</label>
+                    <input type="file" name="profile_picture" id=""><br><br>
+                <div style="display:flex; justify-content: space-around;">
+                    <label for="">Choose one from below</label>
+                    <label for="">Doctor</label>
+                        <input type="radio" id="" name="type" value="doctor" />
+                    <label for="">Patient</label>
+                        <input type="radio" id="" name="type" value="patient" checked/>
+                    </div>
+                    <button type="submit">Register</button>
+
+                    <br>
+                    already have account?<a href="{% url 'login' %}">login</a>
+                   
+                </form>
+            </div>
+{% else %}
+			<div class="login">
+
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <label for="email">Email</label>
+                        <input type="email" name="email" id="">
+                        <label for="password">password</label>
+                        <input type="password" name="password" id="">
+                        <button type="submit">Login</button>
+
+                        <br>
+                        don't have an account?<a href="{% url 'register' %}">signup</a>
+
+                        </form>
+
+			
+			</div>
+{% endif %}
+	</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>

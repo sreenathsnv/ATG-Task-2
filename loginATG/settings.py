@@ -28,7 +28,7 @@ DEBUG = os.environ.get("DEBUG","False").lower() == "true"
 
 AUTH_USER_MODEL = 'userauth.CustomUserModel'
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = ['*']
 
 
 # DEBUG = True

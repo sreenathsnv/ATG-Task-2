@@ -202,58 +202,14 @@
         
      {% endif %}
 
-     {% block content %}
-        {% endblock %}
+     <h2>All Blog Posts</h2>
+        
+        <ul>
+            {% for category in categories %}
+              <li><a href="{% url 'blog_posts_by_category' category.id %}">{{ category.name }}</a></li>
+            {% endfor %}
+          </ul>
     <!-- Landing Section -->
-    <div class="landing-section">
-        <h2>Welcome to Our Hospital</h2>
-        <p>We provide the best healthcare services with state-of-the-art facilities and experienced doctors.</p>
-        <a href="/services">Explore Our Services</a>
-    </div>
-    <!-- Care Section -->
-    <div class="care-section">
-        <h2>Our Commitment to Care</h2>
-        <p>At our hospital, we prioritize patient care and strive to provide the highest quality of service. Our dedicated team of professionals is here to support you every step of the way.</p>
-        <div class="care-images">
-            <div class="care-image">
-                <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Healthcare Image 1">
-            </div>
-            <div class="care-image">
-                <img src="https://images.unsplash.com/photo-1576765608622-067973a79f53?q=80&w=1778&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Healthcare Image 2">
-            </div>
-            <div class="care-image">
-                <img src="https://images.unsplash.com/photo-1576765975429-d2d8cf8c0ba0?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Healthcare Image 3">
-            </div>
-        </div>
-    </div>
-
-    
-    <div class="hospital-info">
-        <div class="hospital-card">
-            <h3>Number of Doctors</h3>
-            <p>120</p>
-        </div>
-        <div class="hospital-card">
-            <h3>Number of Patients</h3>
-            <p>1,500</p>
-        </div>
-        <div class="hospital-card">
-            <h3>Number of Beds</h3>
-            <p>300</p>
-        </div>
-        <div class="hospital-card">
-            <h3>Emergency Cases</h3>
-            <p>50</p>
-        </div>
-        <div class="hospital-card">
-            <h3>Departments</h3>
-            <p>10</p>
-        </div>
-        <div class="hospital-card">
-            <h3>Surgeries Performed</h3>
-            <p>200</p>
-        </div>
-    </div>
 </div>
 </body>
 </html>

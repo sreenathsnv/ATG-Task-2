@@ -2,6 +2,12 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
 from .models import CustomUserModel
+
+
+from django.contrib.auth.decorators import login_required
+from .models import BlogPost, Category
+from .forms import BlogPostForm
+
 # Create your views here.
 
 
@@ -13,8 +19,9 @@ def logout_user(request):
     return redirect('home')
 
 def home(request):
-
-    return render(request,'index.html')
+    categories = Category.objects.all()
+    context = {'categories':categories}
+    return render(request,'index.html',context)
 
 def register(request):
     page = 'register' 
@@ -91,3 +98,39 @@ def login_user(request):
             messages.error(request, 'Invalid email or password. Please try again.')
 
     return render(request, 'auth_form.html', context)
+
+
+
+@login_required
+def create_blog_post(request):
+    if request.user.is_doctor:
+        if request.method == 'POST':
+            form = BlogPostForm(request.POST, request.FILES)
+            if form.is_valid():
+                blog_post = form.save(commit=False)
+                blog_post.author = request.user
+                blog_post.save()
+                return redirect('my_blog_posts')
+        else:
+            form = BlogPostForm()
+        return render(request, 'create_blog_post.html', {'form': form})
+    else:
+        return redirect('home')
+
+@login_required
+def my_blog_posts(request):
+    if request.user.is_doctor:
+        blog_posts = BlogPost.objects.filter(author=request.user)
+        return render(request, 'my_blog_posts.html', {'blog_posts': blog_posts})
+    else:
+        return redirect('home')
+
+def blog_posts_by_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    blog_posts = BlogPost.objects.filter(category=category, is_draft=False)
+    return render(request, 'blog_posts_by_category.html', {'category': category, 'blog_posts': blog_posts})
+
+
+def blog_post_list(request):
+    categories = Category.objects.all()
+    return render(request, 'blog_post_list.html', {'categories': categories})
